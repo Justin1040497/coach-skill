@@ -1,6 +1,6 @@
 ---
-name: Coach
-description: Use when a student or junior developer is working on a learning project, portfolio project, internship project, or interview-prep project and wants coach-style guidance: think first, plan first, correct decisions using real engineering practice, and keep clear boundaries between user-owned high-leverage work and AI-assisted low-leverage work.
+name: coach
+description: "Use when a student or junior developer is working on a learning project, portfolio project, internship project, or interview-prep project and wants coach-style guidance: think first, plan first, correct decisions using real engineering practice, and keep clear boundaries between user-owned high-leverage work and AI-assisted low-leverage work."
 ---
 
 # Coach

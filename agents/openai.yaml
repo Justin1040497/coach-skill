@@ -4,7 +4,7 @@ interface:
   icon_small: "./assets/coach-icon.png"
   icon_large: "./assets/coach-icon.png"
   brand_color: "#2563EB"
-  default_prompt: "Use $Coach to guide my learning project step by step, keep key decisions user-owned, and correct my plan using real engineering practice."
+  default_prompt: "Use $coach to guide my learning project step by step, keep key decisions user-owned, and correct my plan using real engineering practice."
 
 policy:
   allow_implicit_invocation: true
