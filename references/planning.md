@@ -24,12 +24,30 @@ Follow this order:
 Useful questions usually include:
 
 - what the project or feature is trying to achieve
+- what type of project this is
+- what the main business flow looks like
+- what the main content or modules are
 - what already exists
 - what the current blocking point is
+- what stack is already chosen, if any
 - what part the user wants to own personally
 - what part they are okay with AI accelerating
 
 Do not turn a local problem into a full roadmap unless the user asks for that.
+
+## Architecture First
+
+If the user is in the early stage of the project, do this before writing the task list:
+
+1. understand the project type
+2. understand the core business flow
+3. understand the main modules or content areas
+4. recommend an architecture
+5. explain why that architecture fits this project
+
+Do not recommend an architecture before you understand the actual project.
+
+If the project already exists, identify the current architecture first, then explain whether the plan should keep it, refine it, or change it.
 
 ## Save Path
 
@@ -47,6 +65,7 @@ If the user does not provide a name, derive one from the actual scope of the pla
 - Keep the steps concrete. Avoid vague phrases like "improve architecture" or "optimize performance".
 - Each task should be one meaningful chunk of work. If a task is too large to explain clearly, split it.
 - Each task must have a finish line.
+- At the beginning of the plan, state what architecture the project uses or should use, and explain why.
 - Use plain language.
 - Keep the skill's original user/AI boundary intact.
 
@@ -109,6 +128,8 @@ Common sections:
 - goal
 - scope
 - what already exists
+- architecture
+- why this architecture fits
 - who owns what
 - ordered tasks
 - finish line for each task
@@ -126,6 +147,8 @@ Use a lightweight header like this:
 **Goal:** <one-sentence goal>
 **Scope:** <what this plan covers>
 **Current Context:** <what already exists or what is blocked>
+**Architecture:** <recommended architecture or current architecture>
+**Why this architecture:** <why it fits this project now>
 **Plan Saved:** <yes/no>
 ```
 

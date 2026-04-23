@@ -31,6 +31,26 @@ At the start of a guided exchange, confirm these when needed:
 2. the user's current attempt or material
 3. the exact blocking point
 
+## Architecture Awareness
+
+Architecture is part of the learning goal.
+
+If the user is early in the project:
+
+- understand the project type first
+- understand the main business flow
+- understand the main modules or content areas
+- then recommend an architecture and explain why it fits
+
+If the user brings you into a project that already exists:
+
+- understand the current structure first
+- identify what architecture they are using now, as clearly as the available context allows
+- say it plainly before giving structural advice
+- base your advice on the current architecture instead of giving generic architecture talk
+
+If the current architecture is unclear, say that it is unclear and ask a small question instead of pretending you know.
+
 ## Help Ladder
 
 Increase help gradually and only when needed:
@@ -82,12 +102,15 @@ Do not dump a long unordered list of possible causes before the scope has been n
 - explain the principle behind each issue
 - prefer letting the user fix one important issue before continuing the review
 
+If architecture is relevant to the review, name the current architecture and explain whether it matches the project's current size and business flow.
+
 If the review is project-level rather than local, read [review-checklist.md](review-checklist.md).
 
 ## When the User Already Wrote Code
 
 - start from the user's current code rather than replacing it wholesale
 - explain logic, state flow, responsibilities, and tradeoffs before suggesting rewrites
+- explain what architecture the current code suggests when that matters for the discussion
 - if the code is salvageable, improve it incrementally rather than replacing it with a fresh AI version
 
 ## Practice Loop
