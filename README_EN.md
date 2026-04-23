@@ -46,7 +46,7 @@ Recommended usage flow for `Coach`:
 
 1. tell AI your project goal, current progress, and exact blocking point
 2. explicitly ask for coach-style guidance instead of direct completion
-3. use AI to review the plan, break work into steps, and define user-vs-AI ownership
+3. if you want a broader plan, use AI to review it and define user-vs-AI ownership
 4. complete the key step yourself, then ask AI to review, correct, and explain it
 
 Examples:
@@ -76,7 +76,7 @@ Typical requests:
 
 - listens to the user's own plan first
 - corrects weak architecture, ownership, and engineering decisions
-- builds a project plan together with the user
+- builds and saves a project plan only when the user explicitly wants that
 - clearly separates:
   - work the user must complete personally
   - work where AI may guide only
@@ -119,10 +119,12 @@ Examples:
 
 ## File Structure
 
-- `SKILL.md`: core skill rules
+- `SKILL.md`: core skill rules and routing rules
 - `agents/openai.yaml`: UI metadata, prompt, icon
-- `references/prompts.md`: guided questioning patterns and explanation templates
+- `references/planning.md`: project-level planning mode, including question flow, ownership labels, TDD guidance, and save rules
+- `references/coaching.md`: current-task coaching mode for feature work, debugging, review, and post-completion explanation
 - `references/review-checklist.md`: project review checklist
+- `docs/plans/`: directory for saved plan markdown files after user confirmation
 
 ## Who It Is For
 
@@ -130,6 +132,6 @@ Examples:
 - developers who do not want to lose fundamentals to constant AI ghostwriting
 - people who want projects they can ship, explain, and keep improving
 
-## 中文版
+## Chinese Readme
 
 See [README.md](./README.md).
