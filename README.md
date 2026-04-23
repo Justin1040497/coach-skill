@@ -122,7 +122,7 @@
 - `references/planning.md`：项目级计划模式，包含问答确认、任务归属、TDD 说明和计划落盘规则
 - `references/coaching.md`：当前任务辅导模式，包含写功能、debug、review、讲解的规则
 - `references/review-checklist.md`：项目审查清单
-- `docs/plans/`：用户确认后保存计划 Markdown 的目录
+- 计划文件会保存到目标项目里的 `docs/plan/` 目录，不保存在这个 skill 自己的目录里
 
 ## 适合谁
 

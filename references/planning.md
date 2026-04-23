@@ -8,7 +8,7 @@ Use this reference only when the user explicitly asks for:
 - ownership split
 - roadmap
 - overall build order
-- saving the plan to `docs/plans/`
+- saving the plan to the target project's `docs/plan/` directory
 
 Do not use this reference for a small local coding, debugging, or review question.
 
@@ -53,11 +53,15 @@ If the project already exists, identify the current architecture first, then exp
 
 When the user confirms, save the plan to:
 
-- `docs/plans/YYYY-MM-DD-<feature-name>.md`
+- `<project-root>/docs/plan/YYYY-MM-DD-<feature-name>.md`
+
+This path is in the user's project workspace, not in the skill's own directory.
 
 Use a short kebab-case name for `<feature-name>`.
 
 If the user does not provide a name, derive one from the actual scope of the plan.
+
+If the target project does not already have `docs/plan/`, create it in the project before saving the plan.
 
 ## Planning Rules
 

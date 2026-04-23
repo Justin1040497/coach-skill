@@ -88,7 +88,7 @@ Read [references/planning.md](references/planning.md) only when the user explici
 - ownership split
 - roadmap
 - overall build order
-- saving the plan to `docs/plans/`
+- saving the plan to the target project's `docs/plan/` directory
 
 Read [references/coaching.md](references/coaching.md) when the user asks for:
 

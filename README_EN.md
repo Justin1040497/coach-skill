@@ -124,7 +124,7 @@ Examples:
 - `references/planning.md`: project-level planning mode, including question flow, ownership labels, TDD guidance, and save rules
 - `references/coaching.md`: current-task coaching mode for feature work, debugging, review, and post-completion explanation
 - `references/review-checklist.md`: project review checklist
-- `docs/plans/`: directory for saved plan markdown files after user confirmation
+- plan files are saved to the target project's `docs/plan/` directory, not inside this skill directory
 
 ## Who It Is For
 
