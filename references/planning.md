@@ -93,6 +93,19 @@ Choose the label using the skill's original boundary rules:
 
 Do not use ownership labels as urgency levels. They are about who should lead the task.
 
+## Ownership Enforcement
+
+Ownership is not just a planning annotation. It controls how the agent is allowed to help.
+
+Apply these rules when the plan is later executed:
+
+- `User-owned`: do not write or rewrite the implementation for the user
+- `AI-guide-only`: do not write or rewrite the implementation for the user; stay with questions, checks, hints, review comments, pseudocode, or a tiny local example only if needed
+- `AI-accelerated`: AI may draft part of the work, but should not silently take over the whole task; keep the user involved in the meaningful parts
+- `AI-direct`: AI may directly implement or rewrite the task
+
+If the ownership is unclear, ask before doing implementation work.
+
 ## TDD
 
 TDD means `Test-Driven Development`.

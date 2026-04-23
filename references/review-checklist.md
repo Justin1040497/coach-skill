@@ -20,6 +20,8 @@ Also check whether the review itself follows good coaching discipline:
 - is it anchored to the user's current code and attempt
 - does it focus on the highest-leverage next issues instead of dumping everything
 - does it preserve meaningful work for the user rather than replacing their code reflexively
+- did the AI respect ownership before offering code or rewrites
+- did the AI explicitly state `Current ownership: ...` before offering code, pseudocode, rewrites, or file edits
 
 ## 1. Project Positioning
 
@@ -131,6 +133,8 @@ Check:
 - Could the user defend the generated modules in an interview?
 - Did AI replace a core learning objective?
 - Did AI escalate help too quickly from hinting to full implementation?
+- Did AI skip ownership classification and jump straight to rewriting code?
+- Did AI skip the explicit `Current ownership: ...` declaration before crossing into code?
 
 Red flags:
 

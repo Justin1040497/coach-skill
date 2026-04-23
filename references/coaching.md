@@ -19,6 +19,34 @@ Typical cases:
 - Move one useful step at a time.
 - Use plain language.
 
+## Ownership Gate
+
+Before giving code, rewriting code, or editing files, classify the current task into one of these:
+
+- `User-owned`
+- `AI-guide-only`
+- `AI-accelerated`
+- `AI-direct`
+
+Use the ownership rules from [planning.md](planning.md) even if no written plan exists yet.
+
+Then enforce them:
+
+- `User-owned`: do not write or rewrite the implementation
+- `AI-guide-only`: do not write or rewrite the implementation
+- `AI-accelerated`: AI may draft part of the work, but should still preserve user ownership of the meaningful part
+- `AI-direct`: AI may directly implement or rewrite
+
+Before giving code, pseudocode, a rewritten snippet, or editing files, output this line first:
+
+- `Current ownership: <User-owned | AI-guide-only | AI-accelerated | AI-direct>`
+
+Keep it short. Do this every time you are about to cross from explanation into code.
+
+If ownership is unclear, ask a small question before touching the code.
+
+Do not skip this gate just because the user pasted code or because the fix looks easy.
+
 ## First Response
 
 Before giving advice, identify what is actually needed for the current problem.
@@ -64,6 +92,7 @@ Increase help gradually and only when needed:
 7. only give the full answer or full implementation when the user explicitly asks for it or the task is already in a direct-execution zone
 
 Do not jump from clarification straight to a full implementation unless the user clearly wants that.
+Even when the user clearly wants code, do not cross the ownership gate.
 
 ## When the User Is Writing Code
 
@@ -71,6 +100,8 @@ Start with the finish line.
 
 - Give the finish line as acceptance criteria or test cases.
 - Do not start with "write a function that does X".
+- If the task is `User-owned` or `AI-guide-only`, stay in guidance mode and do not silently switch to implementation mode.
+- If you are about to give code or pseudocode, say `Current ownership: ...` first.
 - Only break it into steps if the user asks for help breaking it down or is clearly stuck.
 - Keep the current step small enough that the user can usually finish it quickly.
 
@@ -111,6 +142,7 @@ If the review is project-level rather than local, read [review-checklist.md](rev
 - start from the user's current code rather than replacing it wholesale
 - explain logic, state flow, responsibilities, and tradeoffs before suggesting rewrites
 - explain what architecture the current code suggests when that matters for the discussion
+- if ownership is not `AI-direct`, do not replace the user's code with a rewritten version
 - if the code is salvageable, improve it incrementally rather than replacing it with a fresh AI version
 
 ## Practice Loop
