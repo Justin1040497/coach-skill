@@ -1,239 +1,117 @@
-# Project Review Checklist
+# Review Checklist
 
-Use this checklist when reviewing a user's learning project, portfolio project, or interview project.
+Use this checklist when reviewing a project map, module plan, flowchart, or completed Agent implementation.
 
-The goal is not to judge style taste. The goal is to detect whether the project reflects real engineering thinking or just AI-assisted surface assembly.
+The goal is to keep the work project-aware, module-focused, and aligned with confirmed user intent.
 
-## Review Outputs
+## Project Map Check
 
-When reviewing, return:
+Check whether the first project summary answered:
 
-- strongest signals
-- weakest signals
-- modules the user must personally understand better
-- places where AI use is acceptable
-- places where AI use has gone too far
-- concrete next fixes
+- what type of project this is
+- which features already exist
+- how complete those features appear
+- which functional modules the project contains
+- which architecture term best describes the project
+- what the user wants to do next
 
-Also check whether the review itself follows good coaching discipline:
+The map should describe the current project, not start with unsolicited criticism.
 
-- is it anchored to the user's current code and attempt
-- does it focus on the highest-leverage next issues instead of dumping everything
-- does it preserve meaningful work for the user rather than replacing their code reflexively
-- did the AI respect ownership before offering code or rewrites
-- did the AI explicitly state `Current ownership: ...` before offering code, pseudocode, rewrites, or file edits
+## Functional Module Check
 
-## 1. Project Positioning
+Good module splits describe behavior areas:
 
-Check:
+- editing
+- image handling
+- undo/redo
+- local storage
+- import/export
+- task processing
+- draft recovery
+- authentication
+- search/filtering
 
-- Is the target role clear?
-- Does the project type match that role?
-- Is the scope small enough to finish but large enough to show depth?
-- Is there a clear one-line value proposition?
+Poor module splits confuse architecture with features:
 
-Red flags:
+- domain
+- application
+- infrastructure
+- repository interface
+- repository implementation
+- DTOs
 
-- the project tries to show everything
-- there is no clear hiring signal
-- the project is mostly visual surface
+If the split is too fine, merge small items into a behavior area the user can reason about.
 
-## 2. Business Realism
+## Architecture Check
 
-Check:
+The architecture section should use professional terms such as:
 
-- Is there a believable user flow?
-- Is there real state transition complexity?
-- Are loading, empty, and error states designed?
-- Is there at least one meaningful edge case?
+- layered architecture
+- MVVM
+- MVC
+- MVP
+- Clean Architecture
+- feature-first architecture
+- component-based architecture
+- client-server architecture
+- event-driven architecture
 
-Red flags:
+If the label is approximate, say it is approximate.
 
-- page collection without flow
-- mock business that never creates real data-state pressure
-- every page works only in the happy path
+## Module Plan Check
 
-## 3. Architecture Quality
+Before implementation, verify that the plan covers:
 
-Check:
+- target behavior
+- user interaction flow
+- inputs and outputs
+- state changes
+- data lifecycle
+- error and edge-case handling
+- related modules
+- out-of-scope items
 
-- Are modules split by responsibility rather than appearance?
-- Is state ownership clear?
-- Are reusable parts truly reusable?
-- Is the directory structure likely to scale one step further?
+For file/task/draft/cache/storage modules, lifecycle and recovery rules are required.
 
-Red flags:
+## Flowchart Check
 
-- over-fragmented files with weak boundaries
-- everything pushed into global state
-- everything left local without a state strategy
-- "componentization" used as decoration
+A valid plan should include both:
 
-## 4. Frontend or Mobile Depth
+- Mermaid flowchart
+- text visual flowchart with arrows, indentation, and `Y/N` branches
 
-For frontend, check:
+The implementation must follow these flowcharts unless the user confirms a change.
 
-- component abstraction
-- state separation
-- list and filtering complexity
-- performance handling
-- environment and testing discipline
+## Execution Check
 
-For mobile, check:
+Before files are edited, the user must choose:
 
-- weak-network behavior
-- lifecycle handling
-- loading and retry logic
-- device capability integration
-- startup and render constraints
+- user implements
+- Agent implements
 
-Red flags:
+If the user implements, provide steps and checks, not full code.
 
-- static UI heavy, system behavior light
-- no attention to platform-specific risk
+If the Agent implements, verify:
 
-## 5. Engineering Quality
+- the change stayed inside the confirmed scope
+- unclear key details were asked about
+- syntax/framework/toolchain issues were checked against official docs or reliable sources
+- low-value style-only issues did not distract from the module goal
 
-Check:
-
-- lint and formatting setup
-- type safety discipline
-- error handling consistency
-- code duplication level
-- whether key modules have tests or at least testable structure
-
-Red flags:
-
-- inconsistent style between files suggesting raw AI paste
-- dead code and unused abstractions kept after generation
-- giant files with mixed responsibilities
-- no conventions for naming, error handling, or data flow
-
-## 6. Performance and Stability
-
-Check:
-
-- Did the user identify realistic bottlenecks?
-- Are optimizations tied to real risks?
-- Is there any caching, debouncing, lazy loading, pagination, or render control where appropriate?
-- Are failure states and retries considered?
-
-Red flags:
-
-- "performance optimization" appears only as buzzwords
-- expensive UI structures with no mitigation
-- poor resilience under slow network or large data
-
-## 7. AI Boundary Quality
-
-Check:
-
-- Which modules were clearly AI-assisted?
-- Which modules still show strong user ownership?
-- Could the user defend the generated modules in an interview?
-- Did AI replace a core learning objective?
-- Did AI escalate help too quickly from hinting to full implementation?
-- Did AI skip ownership classification and jump straight to rewriting code?
-- Did AI skip the explicit `Current ownership: ...` declaration before crossing into code?
-
-Red flags:
-
-- the most important module is obviously AI-written and poorly understood
-- code style changes sharply across modules
-- complex code exists with no matching reasoning from the user
-- abstractions are present but the user cannot justify them
-- AI replaced salvageable user code instead of coaching an incremental improvement
-
-## 8. Interview Defensibility
-
-For each major module, ask whether the user can answer:
-
-1. Why this design?
-2. What alternatives were considered?
-3. What bugs are most likely?
-4. How would you debug them?
-5. How would this change under a new requirement?
-
-Scoring suggestion:
-
-- `5/5`: strong ownership
-- `4/5`: acceptable but needs practice
-- `3/5 or below`: this module is not yet interview-safe
-
-Also check whether AI has already helped the user produce a post-completion explanation covering:
-
-- what the module does
-- why it is designed this way
-- what benefits it brings
-- what alternatives exist
-- why those alternatives were not chosen here
-- how to clearly understand it and describe it to someone else
-
-If this explanation step has not happened, treat the module as incompletely learned even if the code works.
-
-Also check whether the explanation follows a stable structure instead of scattered remarks. A good explanation should cover:
-
-- what it does
-- why it exists
-- what value it brings
-- what the alternatives are
-- why those alternatives are not preferred here
-- how to form a correct mental model
-- how to describe it clearly to another person
-
-## 8.5 Coaching Quality
-
-Check:
-
-- Was the user asked to think before AI proposed the plan?
-- Was the exchange kept to one meaningful next step at a time?
-- Were debug and review flows structured instead of chaotic?
-- Did the AI preserve a real practice loop for the user?
-
-Red flags:
-
-- AI asked for learning but then immediately solved everything
-- too many tasks or explanations were pushed in a single step
-- feedback restarted from theory instead of using the user's actual attempt
-
-## 9. What Companies Usually Prefer
-
-Use this section to correct the user toward more realistic patterns.
-
-In general, real teams prefer:
-
-- simple and stable architecture over fashionable architecture
-- clear state ownership over all-purpose global stores
-- reusable modules with actual use cases over speculative abstraction
-- targeted performance work over premature optimization
-- conventions and maintainability over cleverness
-
-Remind the user:
-
-- enterprise code is often less fancy but more stable
-- interviewers care more about tradeoffs than code volume
-- GitHub projects worth learning from usually have cleaner boundaries, fewer magical abstractions, and more explicit engineering constraints
-
-## Review Summary Template
-
-Use this structure:
-
-### Strongest Signals
-
-- 3 things that already look like real engineering work
-
-### Weakest Signals
-
-- 3 things that currently look shallow, brittle, or AI-assembled
-
-### Must-Own Modules
-
-- modules the user should rewrite or deeply rehearse personally
-
-### AI-Acceptable Zones
-
-- modules where AI assistance is productive and low-risk
-
-### Next Fixes
-
-- the next 3 highest-leverage changes before the project is shown to others
+## Completion Log Check
+
+After Agent implementation, confirm there is a log under:
+
+`docs/logs/`
+
+The log must include:
+
+- behavior summary
+- which plan or flowchart was followed
+- modified files
+- added files
+- purpose of each added file
+- deleted files
+- `No deleted files` if none were deleted
+- unfinished items or points needing user confirmation
+- validation method or test result

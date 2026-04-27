@@ -1,136 +1,156 @@
-<div align="center">
-  <img src="./assets/coach-icon.png" alt="Coach" width="120" />
-  <h1>Coach</h1>
-  <p><strong>A coach-style skill for learning projects and real engineering growth</strong></p>
-  <p>Help AI guide thinking, planning, correction, and explanation before it accelerates implementation.</p>
+# Coach
 
-  <p>
-    <img alt="version" src="https://img.shields.io/badge/version-v1.0-111827?style=for-the-badge" />
-    <img alt="mode" src="https://img.shields.io/badge/mode-Coach-2563EB?style=for-the-badge" />
-    <img alt="focus" src="https://img.shields.io/badge/focus-Learning%20Projects-F59E0B?style=for-the-badge" />
-    <img alt="language" src="https://img.shields.io/badge/language-Adaptive-16A34A?style=for-the-badge" />
-  </p>
+`Coach` is a project-guidance skill for learning projects, portfolio projects, internship projects, campus recruitment projects, competition projects, and interview-prep projects.
 
-  <p>
-    <img alt="workflow" src="https://img.shields.io/badge/workflow-Think%20First-7C3AED?style=flat-square" />
-    <img alt="ownership" src="https://img.shields.io/badge/ownership-User%20Led-DC2626?style=flat-square" />
-    <img alt="acceleration" src="https://img.shields.io/badge/AI-Low--Leverage%20Acceleration-0891B2?style=flat-square" />
-    <img alt="practice" src="https://img.shields.io/badge/review-Post--Completion%20Teaching-65A30D?style=flat-square" />
-  </p>
-</div>
-
----
-
-`Coach` is a skill for learning projects, portfolio projects, internship projects, campus recruitment projects, and competition projects.
-
-Its purpose is not to finish the project for the user as fast as possible. Its purpose is to help the user learn in a real engineering context:
-
-- think before building
-- understand before implementing
-- keep high-leverage work user-owned
-- let AI accelerate low-leverage repetitive work
-- explain clearly what was built and why
+After it triggers, it first scans the project, understands what the project contains, maps functional modules, names the architecture, and then asks whether the user wants to continue building, organize the project, or solve a specific problem.
 
 ## Core Positioning
 
-`Coach` is designed for cases where:
+`Coach` helps the user understand, split, and explain a project before deciding how to change it.
 
-- the user wants to build a project without letting AI ghostwrite everything
-- the user wants AI to guide thinking about architecture, business flow, component boundaries, performance, code quality, coupling, and reuse
-- the user wants corrections based on real engineering practice and strong open-source patterns
-- the user wants post-completion explanations so the work is genuinely understood and can be explained to others
+It focuses on:
 
-## Quick Start
+- what the project is
+- which features already exist
+- how complete those features appear
+- which functional modules the project contains
+- which architecture term best describes the project
+- whether the user wants to continue, organize, or fix a module
+- whether the module flow and edge cases are clear before implementation
 
-Recommended usage flow for `Coach`:
+## Default Flow
 
-1. tell AI your project goal, current progress, and exact blocking point
-2. explicitly ask for coach-style guidance instead of direct completion
-3. if you want a broader plan, use AI to review it and define user-vs-AI ownership
-4. complete the key step yourself, then ask AI to review, correct, and explain it
+After triggering, `Coach` will:
 
-Examples:
+1. Decide whether the current directory is a project.
+2. Scan it directly if it is a project; otherwise ask for the project path.
+3. Summarize project type and current features.
+4. Split the project into functional modules.
+5. Name the project architecture with professional terms.
+6. Ask whether the user wants to continue building, organize the project, or solve a problem.
+7. Discuss the plan after the user chooses a module.
+8. Provide both a Mermaid flowchart and a text visual flowchart after the plan is clear.
+9. Ask whether the user wants to implement it themselves or have the Agent implement it according to the confirmed flowcharts.
+
+## Functional Module Mapping
+
+`Coach` splits by what the project does, not by architecture layers.
+
+For example, a note-taking project may contain:
+
+- editor system
+- image handling system
+- undo/redo system
+- local storage system
+- search and categorization system
+
+It should not split the project into:
+
+- domain layer
+- application layer
+- infrastructure layer
+- repository interface
+- repository implementation
+
+Architecture layers can be mentioned in the architecture section, but they are not functional modules.
+
+## Module Change Flow
+
+When the user wants to add, change, or update a module, `Coach` first clarifies:
+
+- module goal
+- user interaction flow
+- inputs and outputs
+- state changes
+- data creation, saving, recovery, and deletion timing
+- errors and edge cases
+- relationships with other modules
+- what is out of scope
+
+If a key detail is unclear, `Coach` asks instead of guessing.
+
+## Flowcharts
+
+After the plan is confirmed, `Coach` provides both:
+
+- Mermaid flowchart
+- text visual flowchart
+
+The text visual flowchart uses indentation, arrows, and `Y/N` branches for quick reading.
+
+## Execution Choice
+
+After the flowcharts, `Coach` asks:
 
 ```text
-Use $Coach to help me build this learning project step by step.
-I want to own the architecture and core business flow myself.
-First help me review my plan instead of writing the code directly.
+Do you want to implement this yourself, or should the Agent implement it according to the confirmed flowcharts?
 ```
 
-```text
-Use $Coach to review the module I just finished.
-Explain what it does, why it is designed this way, what alternatives exist,
-and how I should understand and explain it clearly to someone else.
-```
+If the user implements:
 
-## Example Usage
+- provide implementation steps
+- provide checkpoints
+- provide acceptance criteria
+- do not provide full code
+- do not edit files
 
-Typical requests:
+If the Agent implements:
 
-- “Do not write the code yet. Help me review whether this project plan is reasonable.”
-- “I want to write this module myself. Break it into a few steps for me.”
-- “I just finished this part. Help me understand what it is actually doing.”
-- “Review this learning project and tell me what looks like real engineering work and what looks too AI-assembled.”
+- strictly follow the confirmed plan and flowcharts
+- do not add unrelated features
+- ask when key details are unclear
+- verify syntax, framework, package, or toolchain issues with official documentation or reliable sources
+- create `docs/logs/` at the project root and write a completion log
 
-## What It Does
+## Completion Log
 
-- listens to the user's own plan first
-- corrects weak architecture, ownership, and engineering decisions
-- builds and saves a project plan only when the user explicitly wants that
-- clearly separates:
-  - work the user must complete personally
-  - work where AI may guide only
-  - work where AI is recommended to accelerate
-  - repetitive work AI may complete directly
-- after the user completes a module, explains:
-  - what it does
-  - why it is designed this way
-  - what benefits it brings
-  - what other options exist
-  - why those options are not preferred here
-  - how to understand it clearly
-  - how to explain it clearly to someone else
+After Agent implementation, the log must include:
 
-## Core Principles
+- behavior summary
+- which plan or flowchart was followed
+- modified files
+- added files
+- purpose of each added file
+- deleted files
+- explicitly say `No deleted files` if none were deleted
+- unfinished items or points needing user confirmation
+- validation method or test result
 
-- understanding before speed
-- user ownership before AI substitution
-- one meaningful next step at a time
-- questions, hints, checkpoints, and scaffolds before full answers
-- feedback anchored to the user's actual code and current attempt
-- corrections grounded in real engineering practice instead of textbook-only explanations
+## Final User Summary
 
-## Language Behavior
+After writing the log, `Coach` also gives the user a very easy-to-understand final summary.
 
-- prompt wording, coaching questions, reviews, and explanations should follow the user's working language
-- if the user mainly uses Chinese, respond in Chinese
-- if the user mainly uses English, respond in English
-- if the user mixes languages, follow the main task language unless the user explicitly requests otherwise
+This summary is not the log and should not just list files. It is a plain-language feature summary the user can reuse in a project review or interview.
 
-## Good Trigger Examples
+It should explain:
 
-Examples:
+- what feature or problem was completed
+- what technical approach or architecture was used
+- why that approach fits this project
+- what important cases or constraints were considered
+- why another approach was not used
+- how the feature works at a high level
+- what the user can say if someone asks how this feature was built
 
-- Guide me through this project step by step.
-- Do not give me the full code yet. Help me clean up the plan first.
-- Review the architecture of this learning project.
-- I want to build the core modules myself. Help me plan and correct the structure.
-- After I finish this part, explain what it is doing and why.
+Keep this summary very plain and avoid unnecessary technical wording. If a technical term is useful, explain it immediately in simple words.
+
+After the summary, `Coach` asks whether the user understood it and gives several interview-style questions.
+
+The questions may test simple ideas, but should sound slightly professional so the user can practice common interview wording. Examples:
+
+- Why did you choose this implementation approach?
+- What problem does this module solve in the overall workflow?
+- Which edge cases did you consider?
+- What happens if the operation fails halfway?
+- If the data size or requirements grow, how would this design change?
 
 ## File Structure
 
-- `SKILL.md`: core skill rules and routing rules
-- `agents/openai.yaml`: UI metadata, prompt, icon
-- `references/planning.md`: project-level planning mode, including question flow, ownership labels, TDD guidance, and save rules
-- `references/coaching.md`: current-task coaching mode for feature work, debugging, review, and post-completion explanation
-- `references/review-checklist.md`: project review checklist
-- plan files are saved to the target project's `docs/plan/` directory, not inside this skill directory
-
-## Who It Is For
-
-- students who want projects to build real ability
-- developers who do not want to lose fundamentals to constant AI ghostwriting
-- people who want projects they can ship, explain, and keep improving
+- `SKILL.md`: core skill rules and routing
+- `agents/openai.yaml`: display name, default prompt, and metadata
+- `references/planning.md`: project scanning, functional module mapping, and architecture naming
+- `references/coaching.md`: module planning, flowcharts, execution choice, and Agent implementation
+- `references/review-checklist.md`: checks for project maps, module plans, and completed work
 
 ## Chinese Readme
 

@@ -1,214 +1,115 @@
-# Planning Mode
+# Project Discovery And Module Mapping
 
-Use this reference only when the user explicitly asks for:
+Use this reference when the skill first triggers, or when the user asks to understand, plan, continue, organize, or troubleshoot a project.
 
-- a project plan
-- module breakdown
-- architecture direction
-- ownership split
-- roadmap
-- overall build order
-- saving the plan to the target project's `docs/plan/` directory
+## Project Detection
 
-Do not use this reference for a small local coding, debugging, or review question.
+First decide whether the current working directory is a project.
 
-## Start Flow
+Common project signals:
 
-Follow this order:
+- `README`, `docs/`, `.git/`
+- `package.json`, `vite.config.*`, `next.config.*`
+- `pubspec.yaml`
+- `pom.xml`, `build.gradle`, `settings.gradle`
+- `Cargo.toml`, `go.mod`, `pyproject.toml`
+- `src/`, `lib/`, `app/`, `test/`, `tests/`
 
-1. Ask only the minimum questions needed to write a useful plan.
-2. Do not guess if a key detail is missing.
-3. Once the scope is clear enough, ask whether the user wants the plan saved as a Markdown file.
-4. Save the plan only after the user confirms.
+If the current directory has clear project signals, scan it. If not, ask the user for the project path.
 
-Useful questions usually include:
+## What To Scan
 
-- what the project or feature is trying to achieve
-- what type of project this is
-- what the main business flow looks like
-- what the main content or modules are
-- what already exists
-- what the current blocking point is
-- what stack is already chosen, if any
-- what part the user wants to own personally
-- what part they are okay with AI accelerating
+Read enough to understand the project, without loading irrelevant files.
 
-Do not turn a local problem into a full roadmap unless the user asks for that.
+Prefer:
 
-## Architecture First
+- file tree
+- README and docs
+- dependency and build configuration
+- app entry points
+- routing/navigation
+- major pages or screens
+- state management
+- data models
+- services/API/storage
+- tests, if present
 
-If the user is in the early stage of the project, do this before writing the task list:
+Avoid starting with code-quality critique. The first output should be a project map.
 
-1. understand the project type
-2. understand the core business flow
-3. understand the main modules or content areas
-4. recommend an architecture
-5. explain why that architecture fits this project
+## First Output Shape
 
-Do not recommend an architecture before you understand the actual project.
+After scanning, answer in this order:
 
-If the project already exists, identify the current architecture first, then explain whether the plan should keep it, refine it, or change it.
+1. `Project Type`
+2. `Current Features`
+3. `Feature Completion`
+4. `Functional Modules`
+5. `Architecture`
+6. `Next Choice`
 
-## Save Path
+Keep the summary grounded in actual files. If something is inferred, say it is inferred.
 
-When the user confirms, save the plan to:
+## Functional Module Mapping
 
-- `<project-root>/docs/plan/YYYY-MM-DD-<feature-name>.md`
+Split by what the project does, not by architecture folders.
 
-This path is in the user's project workspace, not in the skill's own directory.
+Good functional modules:
 
-Use a short kebab-case name for `<feature-name>`.
+- editor system
+- image handling system
+- undo/redo system
+- local storage system
+- search and filtering system
+- import/export system
+- compression task system
+- draft recovery system
+- authentication system
+- notification system
 
-If the user does not provide a name, derive one from the actual scope of the plan.
+Bad functional modules:
 
-If the target project does not already have `docs/plan/`, create it in the project before saving the plan.
+- domain layer
+- application layer
+- infrastructure layer
+- controller folder
+- repository interface
+- repository implementation
+- DTO folder
 
-## Planning Rules
+Architecture layers can be mentioned in the architecture section, but they are not the functional module map.
 
-- Keep the plan scoped to the user's actual ask.
-- Keep the steps concrete. Avoid vague phrases like "improve architecture" or "optimize performance".
-- Each task should be one meaningful chunk of work. If a task is too large to explain clearly, split it.
-- Each task must have a finish line.
-- At the beginning of the plan, state what architecture the project uses or should use, and explain why.
-- Use plain language.
-- Keep the skill's original user/AI boundary intact.
+Do not split too finely. A module should represent a meaningful behavior area that a user or developer can discuss as one unit.
 
-## Ownership Labels
+## Architecture Naming
 
-Every task in the plan must include exactly one ownership label.
+Use professional architecture terms after the functional module map.
 
-Use these labels:
+Common labels:
 
-- `User-owned`
-- `AI-guide-only`
-- `AI-accelerated`
-- `AI-direct`
+- layered architecture
+- MVVM
+- MVC
+- MVP
+- Clean Architecture
+- feature-first architecture
+- component-based architecture
+- client-server architecture
+- event-driven architecture
 
-Choose the label using the skill's original boundary rules:
+If the project partially matches a pattern, write that clearly.
 
-- `User-owned`: project goal, scope, technical choices, architecture, module boundaries, core business logic, performance strategy, debugging, final review
-- `AI-guide-only`: important work the user should implement personally while AI only gives hints, checkpoints, review, or questions
-- `AI-accelerated`: reusable components, ordinary data flow, validation, admin workflows, and other meaningful but non-core implementation work
-- `AI-direct`: scaffolding, repetitive pages, boilerplate, docs, test skeletons, and refactor grunt work
+Example:
 
-Do not use ownership labels as urgency levels. They are about who should lead the task.
+`The project is closest to layered architecture with some MVVM-style screen organization. It does not look like strict Clean Architecture because the boundaries between domain and infrastructure are not fully isolated.`
 
-## Ownership Enforcement
+## Ask User Intent
 
-Ownership is not just a planning annotation. It controls how the agent is allowed to help.
+End the first project map by asking what the user wants to do next:
 
-Apply these rules when the plan is later executed:
+- continue building the project
+- organize existing work
+- solve a specific problem
 
-- `User-owned`: do not write or rewrite the implementation for the user
-- `AI-guide-only`: do not write or rewrite the implementation for the user; stay with questions, checks, hints, review comments, pseudocode, or a tiny local example only if needed
-- `AI-accelerated`: AI may draft part of the work, but should not silently take over the whole task; keep the user involved in the meaningful parts
-- `AI-direct`: AI may directly implement or rewrite the task
+Also ask which functional module they want to work on and what they want that module to become.
 
-If the ownership is unclear, ask before doing implementation work.
-
-## TDD
-
-TDD means `Test-Driven Development`.
-
-The basic loop is:
-
-1. write a failing test
-2. write the minimum code to make it pass
-3. refactor while keeping the behavior the same
-
-This is often called:
-
-- `Red`: test fails
-- `Green`: make it pass
-- `Refactor`: clean it up
-
-Use TDD when:
-
-- the expected behavior is already clear
-- the task is mostly logic or data rules
-- the result can be checked by tests without too much ambiguity
-
-Do not force TDD when:
-
-- the task is early exploration
-- the UI is still moving around quickly
-- the requirement is not stable enough yet
-
-Even when a task is not a good fit for TDD, it still needs a finish line. In that case, use acceptance criteria or test cases in plain language.
-
-## Plan Output
-
-When writing the plan, include only the parts that help the user move forward.
-
-Common sections:
-
-- goal
-- scope
-- what already exists
-- architecture
-- why this architecture fits
-- who owns what
-- ordered tasks
-- finish line for each task
-- risks or unclear parts
-
-If the user only asked for a narrow plan, keep it narrow.
-
-## Plan Header Template
-
-Use a lightweight header like this:
-
-```md
-# <Feature Name> Plan
-
-**Goal:** <one-sentence goal>
-**Scope:** <what this plan covers>
-**Current Context:** <what already exists or what is blocked>
-**Architecture:** <recommended architecture or current architecture>
-**Why this architecture:** <why it fits this project now>
-**Plan Saved:** <yes/no>
-```
-
-## Task Template
-
-Use this shape for each task:
-
-```md
-### Task N: <Task Name>
-
-**Ownership:** <User-owned | AI-guide-only | AI-accelerated | AI-direct>
-**Why this label:** <short reason>
-**Goal:** <what this task is for>
-**Finish line:**
-- <acceptance criterion or test case>
-- <acceptance criterion or test case>
-
-**Suggested checks:**
-- <test command, manual check, or review question>
-
-**Notes:**
-- <only if needed>
-```
-
-## Good vs Bad Task Wording
-
-Good:
-
-- Define the login states and verify loading, success, and failure are all handled.
-- Split the order page into request state, filter state, and display state, then verify each one can change independently.
-- Extract the shared table component and verify both pages can render with the same API.
-
-Bad:
-
-- Improve architecture
-- Add validation
-- Optimize performance
-- Clean up the code
-
-## After Saving
-
-After saving the plan:
-
-- tell the user the exact path
-- summarize the first task briefly
-- ask whether they want to execute the tasks one by one in the current thread
+Do not proactively decide that a module is bad. Ask for the desired change, target behavior, or problem first.

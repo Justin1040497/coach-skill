@@ -1,10 +1,8 @@
 interface:
   display_name: "Coach"
-  short_description: "Coach-style guidance for learning projects and real engineering habits."
-  icon_small: "./assets/coach-icon.png"
-  icon_large: "./assets/coach-icon.png"
+  short_description: "Project discovery, functional module mapping, flow design, and controlled implementation for learning projects."
   brand_color: "#2563EB"
-  default_prompt: "Use $coach to guide my learning project step by step, keep key decisions user-owned, and correct my plan using real engineering practice."
+  default_prompt: "Use $coach to scan this project, map its functional modules, name its architecture, and help me choose whether to continue, organize, or fix a module."
 
 policy:
   allow_implicit_invocation: true

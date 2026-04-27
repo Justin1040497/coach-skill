@@ -1,185 +1,166 @@
-# Coaching Mode
+# Module Planning And Execution
 
-Use this reference for help on the current task.
+Use this reference after the project has been scanned and the user chooses a functional module to continue, organize, or fix.
 
-Typical cases:
+## Module Discussion
 
-- step-by-step help on a feature
-- hints while the user is coding
-- debugging help
-- code review
-- improving existing code
-- explanation after finishing a module
+Before editing files, clarify the module plan.
 
-## Core Rules
+Ask only for missing information that affects implementation:
 
-- Stay on the current problem.
-- Ask if a key detail is missing.
-- Do not turn a local question into a full project roadmap unless the user asks for that.
-- Move one useful step at a time.
-- Use plain language.
+- What should the module do when finished?
+- What user actions start the flow?
+- What inputs are required?
+- What output or visible result should appear?
+- What state changes happen?
+- What data must be saved, restored, or deleted?
+- What errors or edge cases matter?
+- Which existing modules should this connect to?
+- What is explicitly out of scope?
 
-## Ownership Gate
+If a detail is important and unclear, ask. Do not guess.
 
-Before giving code, rewriting code, or editing files, classify the current task into one of these:
+## Lifecycle And Recovery
 
-- `User-owned`
-- `AI-guide-only`
-- `AI-accelerated`
-- `AI-direct`
+For modules involving files, tasks, drafts, caches, local storage, history, uploads, downloads, or background jobs, clarify lifecycle rules before implementation:
 
-Use the ownership rules from [planning.md](planning.md) even if no written plan exists yet.
+- when temporary or draft data is created
+- when it is saved
+- when it is deleted
+- what happens after cancellation
+- what happens after failure
+- what happens after app restart
+- what happens if a referenced local file disappears
+- when to ask the user to relink or repair missing data
 
-Then enforce them:
+## Flowchart Requirement
 
-- `User-owned`: do not write or rewrite the implementation
-- `AI-guide-only`: do not write or rewrite the implementation
-- `AI-accelerated`: AI may draft part of the work, but should still preserve user ownership of the meaningful part
-- `AI-direct`: AI may directly implement or rewrite
+After the plan is clear, provide two flowcharts before implementation.
 
-Before giving code, pseudocode, a rewritten snippet, or editing files, output this line first:
+### Mermaid Flowchart
 
-- `Current ownership: <User-owned | AI-guide-only | AI-accelerated | AI-direct>`
+Use Mermaid for the structured version.
 
-Keep it short. Do this every time you are about to cross from explanation into code.
+```mermaid
+flowchart TD
+  A["Start"] --> B{"Condition?"}
+  B -->|Yes| C["Handle yes"]
+  B -->|No| D["Handle no"]
+```
 
-If ownership is unclear, ask a small question before touching the code.
+### Text Visual Flowchart
 
-Do not skip this gate just because the user pasted code or because the fix looks easy.
+Also provide a text visual flowchart with indentation, arrows, and `Y/N` branches.
 
-## First Response
+```text
+Read input
+  ↓
+Check option
+  ↓
+Is option enabled?
+  Y -> Use automatic path
 
-Before giving advice, identify what is actually needed for the current problem.
+  N:
+    ↓
+    Read user path
+    ↓
+    Is path empty?
+      Y -> Use default path
+      N -> Validate suffix
+```
 
-If a reliable answer is blocked by missing context, ask only the minimum one or two questions needed before continuing.
+The text version should be easy to read as a visual sketch, not a dense paragraph.
 
-At the start of a guided exchange, confirm these when needed:
+## Execution Choice
 
-1. the user's goal
-2. the user's current attempt or material
-3. the exact blocking point
+After the flowcharts, ask:
 
-## Architecture Awareness
+`Do you want to implement this yourself, or should the Agent implement it according to the confirmed flowcharts?`
 
-Architecture is part of the learning goal.
+Do not edit files before the user answers.
 
-If the user is early in the project:
+## If The User Implements
 
-- understand the project type first
-- understand the main business flow
-- understand the main modules or content areas
-- then recommend an architecture and explain why it fits
+Provide:
 
-If the user brings you into a project that already exists:
+- ordered implementation steps
+- checkpoints
+- acceptance criteria
+- important edge cases
 
-- understand the current structure first
-- identify what architecture they are using now, as clearly as the available context allows
-- say it plainly before giving structural advice
-- base your advice on the current architecture instead of giving generic architecture talk
+Do not provide full implementation code. Do not edit files. Keep the user focused on the confirmed module behavior.
 
-If the current architecture is unclear, say that it is unclear and ask a small question instead of pretending you know.
+## If The Agent Implements
 
-## Help Ladder
+Follow the confirmed flowcharts as constraints.
 
-Increase help gradually and only when needed:
+Rules:
 
-1. clarify goal, constraints, and success criteria
-2. give a small mental model
-3. identify the single best next step
-4. give hints, checks, or debugging direction
-5. give a skeleton, TODO outline, or pseudocode
-6. give a local example or representative code fragment
-7. only give the full answer or full implementation when the user explicitly asks for it or the task is already in a direct-execution zone
+- Implement only the confirmed module change.
+- Do not add unrelated features.
+- Do not perform broad refactors unless the plan explicitly includes them.
+- If a key behavior, lifecycle rule, or edge case is unclear, ask.
+- If syntax, framework API, package, or toolchain errors occur, verify with official documentation first. Use reliable web sources only when official docs are insufficient.
+- Make the smallest project-appropriate change that satisfies the plan.
+- Ignore style-only issues unless they affect behavior or block verification.
 
-Do not jump from clarification straight to a full implementation unless the user clearly wants that.
-Even when the user clearly wants code, do not cross the ownership gate.
+## Completion Log
 
-## When the User Is Writing Code
+After Agent implementation, create `<project-root>/docs/logs/` if needed and write a Markdown log for the current change.
 
-Start with the finish line.
+Use a date and short module name when possible:
 
-- Give the finish line as acceptance criteria or test cases.
-- Do not start with "write a function that does X".
-- If the task is `User-owned` or `AI-guide-only`, stay in guidance mode and do not silently switch to implementation mode.
-- If you are about to give code or pseudocode, say `Current ownership: ...` first.
-- Only break it into steps if the user asks for help breaking it down or is clearly stuck.
-- Keep the current step small enough that the user can usually finish it quickly.
+`docs/logs/YYYY-MM-DD-<module-name>.md`
 
-Useful prompt patterns:
+The log must include:
 
-- If input is `X`, what should the result be?
-- After clicking `A`, what should appear or change?
-- What should happen on invalid input, empty data, or failure?
-- Can you write 2-3 test cases that would prove this part is done?
-- If you want, I can help you split this into the next one or two steps after the finish line is clear.
+- behavior summary
+- which plan or flowchart was followed
+- modified files
+- added files
+- purpose of each added file
+- deleted files
+- `No deleted files` if none were deleted
+- unfinished items or user-confirmation points
+- validation method or test result
 
-## When the User Asks for Debug Help
+Then report a concise summary to the user.
 
-Guide the user through this order:
+The user-facing summary is separate from the log. It should be a plain-language feature summary the user can understand and repeat in a project review or interview.
 
-1. what is the actual observed behavior
-2. what is the expected behavior
-3. what inputs or states produced the issue
-4. where the behavior first diverges from expectation
-5. how to create a smaller reproduction
-6. what to print, isolate, or verify next
+Use this shape when possible:
 
-Do not dump a long unordered list of possible causes before the scope has been narrowed.
+- `What was completed`: the feature or problem that was finished.
+- `What approach was used`: the technical approach or architecture, explained simply.
+- `Why this approach`: why it fits this project.
+- `What was considered`: important cases, constraints, or failure paths.
+- `Why not another way`: one alternative that was not chosen and the simple reason.
+- `How it works`: the high-level flow, without dumping implementation details.
+- `How to explain it`: one short paragraph the user can say to someone else.
 
-## When the User Asks for Review
+Avoid making the final response only a file list. File lists belong in the log; the chat summary should help the user understand the work.
 
-- first say whether the overall direction is basically correct
-- then identify the highest-leverage 1-3 issues
-- explain the principle behind each issue
-- prefer letting the user fix one important issue before continuing the review
+Use very plain language. If a technical term is useful, explain it immediately in simple words.
 
-If architecture is relevant to the review, name the current architecture and explain whether it matches the project's current size and business flow.
+After the summary, ask whether the user understood it. Then give a short set of interview-style questions.
 
-If the review is project-level rather than local, read [review-checklist.md](review-checklist.md).
+The questions should be easy enough to answer from the completed work, but phrased professionally. This helps the user practice translating simple project facts into interview language.
 
-## When the User Already Wrote Code
+Good question types:
 
-- start from the user's current code rather than replacing it wholesale
-- explain logic, state flow, responsibilities, and tradeoffs before suggesting rewrites
-- explain what architecture the current code suggests when that matters for the discussion
-- if ownership is not `AI-direct`, do not replace the user's code with a rewritten version
-- if the code is salvageable, improve it incrementally rather than replacing it with a fresh AI version
+- Why did you choose this implementation approach?
+- What problem does this module solve in the overall workflow?
+- Which edge cases did you consider?
+- What happens if this operation fails halfway?
+- If the data size or requirement grows, what would need to change?
 
-## Practice Loop
+## When The User Says Finished
 
-When the user's goal is learning rather than pure delivery, include lightweight practice when helpful:
+Inspect current files before replying. Do not rely only on the conversation history.
 
-- ask the user to explain the approach first
-- ask for a function signature, module outline, test case, or edge cases before implementation
-- ask the user to predict behavior, outputs, or failure points
-- ask for the smallest working version before expansion
+Report:
 
-Practice should be short and immediately actionable. The point is to create a feedback loop, not homework.
-
-## Post-Completion Teaching
-
-Use this after the user completes a module or a meaningful piece of code in one of these categories:
-
-- the user must complete personally
-- AI may guide but not complete
-- AI is recommended to accelerate
-
-Do not skip this step for important user-owned modules.
-
-First ask for the user's own explanation when helpful:
-
-- Tell me what you think this code is doing first.
-- Why did you split or design it this way?
-- What do you think is the biggest benefit here? What is the biggest risk?
-- If you used a different implementation, where would the complexity move?
-- If someone asks "why not do it the other way," how would you answer?
-
-Then summarize using this structure:
-
-- `What it does`
-- `Why it is done this way`
-- `Benefits of this approach`
-- `What else could be done`
-- `Why the alternative is not preferred here`
-- `How to understand this part clearly`
-- `How to explain it clearly to someone else`
+- what changed in the actual files
+- whether the result matches the confirmed plan
+- what remains unclear or unfinished
+- how the user can verify the module behavior
